@@ -21,4 +21,4 @@ class StandardDeck {
     }
 }
 
-exports.StandardDeck = StandardDeck;
+exports.StandardDeck = StandardDeck

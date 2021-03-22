@@ -1,7 +1,7 @@
-let StandardDeck = require("./standardDeck").StandardDeck
+let Stack = require("./stack").Stack
 
-let standardDeck = new StandardDeck();
+let stack = new Stack();
 
-for (let card of standardDeck.deck) {
+for (let card of stack.deck) {
     console.log(card.toString())
 }

@@ -9,4 +9,4 @@ class Card {
     }
 }
 
-exports.Card = Card;
+exports.Card = Card
