@@ -14,7 +14,7 @@ class Card {
 
     cardValueLookup() {
         return {
-            "ace": 11, // TODO
+            "ace": 1, // TODO
             "two": 2,
             "three": 3,
             "four": 4,
