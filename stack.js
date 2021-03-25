@@ -24,6 +24,14 @@ class Stack {
 
         return this
     }
+
+    drawOne(){
+        if (this.deck.length === 0) {
+            throw 'Card stack is empty.'
+        }
+        let card = this.deck.pop()
+        return card
+    }
 }
 
 exports.Stack = Stack
