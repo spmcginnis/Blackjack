@@ -6,14 +6,11 @@ class Stack {
     }
 
     shuffle() {
-        let placholderArray = this.deck.map( (_card , cardNumber) => {
-            
-            let t = { n: cardNumber , value: Math.random() }
-            return t
+        let mappingArray = this.deck.map( (_card , cardNumber) => {
+            return {n: cardNumber , value: Math.random()}
         })
 
-        placholderArray.sort((a, b) => {
-            console.log(a.n  + ", " + b.n)
+        mappingArray.sort((a, b) => {
             if (a.value > b.value) {
                 return 1
             }
@@ -23,7 +20,7 @@ class Stack {
             return 0
         })
 
-        this.deck = placholderArray.map( element => { return this.deck[element.n] })
+        this.deck = mappingArray.map( element => { return this.deck[element.n] })
 
         return this
     }
