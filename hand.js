@@ -27,6 +27,30 @@ class Hand {
         return total
     }
 
+    isBusted() {
+        return (this.getRunningTotal() > 21);
+    }
+
+    isBlackjack() {
+        return (
+            this.cards.length === 2 &&
+            this.cards.some(card => card.faceValue === "ace") &&
+            this.cards.some(card => card.cardValueLookup()[card.faceValue] === 10)
+        ) 
+    }
+
+
+    evaluateHand() {
+        // check for blackjack
+
+        // check for bust
+
+        // check for ace
+
+        // check for split
+        
+    }
+
 }
 
 exports.Hand = Hand

@@ -1,6 +1,6 @@
 let Stack = require("./stack").Stack
 let Hand = require("./hand").Hand
-let Card = require("./card").Card
+// let Card = require("./card").Card
 
 let stack = new Stack().shuffle()
 

@@ -27,3 +27,41 @@ describe("Hand Totaling", () => {
         });
     }
 });
+
+describe("Hand evaluation", () => {
+    let hand;
+    beforeEach(() => { hand = new Hand() })
+
+    //isBusted true
+    it("isBusted when total is over 21.", ()=> {
+        hand.addCard(new Card("ten", "spades"))
+        hand.addCard(new Card("ten", "diamonds"))
+        hand.addCard(new Card("ten", "hearts"))
+        expect(hand.isBusted()).toBe(true)
+    });
+    //isBusted false
+    it("!isBusted when total is not over 21.", ()=> {
+        hand.addCard(new Card("ten", "spades"))
+        hand.addCard(new Card("ace", "diamonds"))
+        expect(hand.isBusted()).toBe(false)
+    });
+    //isBlackjack true
+    it("isBlackjack when two cards are an ace and a value=10 card.", ()=> {
+        hand.addCard(new Card("ten", "spades"))
+        hand.addCard(new Card("ace", "diamonds"))
+        expect(hand.isBlackjack()).toBe(true)
+    });
+    //isBlackjack false
+    it("!isBlackjack when two cards are not ace and a value=10 card.", ()=> {
+        hand.addCard(new Card("ten", "spades"))
+        hand.addCard(new Card("nine", "diamonds"))
+        expect(hand.isBlackjack()).toBe(false)
+    });
+    //isBlackjack false
+    it("!isBlackjack when more than two cards.", ()=> {
+        hand.addCard(new Card("ten", "spades"))
+        hand.addCard(new Card("ace", "diamonds"))
+        hand.addCard(new Card("ace", "hearts"))
+        expect(hand.isBlackjack()).toBe(false)
+    });
+});
