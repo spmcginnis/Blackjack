@@ -40,12 +40,33 @@ for (let i=0; i<allHands.length; i++){
 
 // Dealer logic here
 // check total if total is less than 17, hit
-while (dealerHand.getRunningTotal() < 17) {    
+// TODO test this behavior for the aces special case
+while (dealerHand.getRunningTotal() <= 17) { 
     let card = stack.drawOne()
     dealerHand.addCard(card)
     console.log("Dealer drew a card: " + card.toString())
     console.log("New running total: " + dealerHand.getRunningTotal())
+
+    if (dealerHand.getRunningTotal() === 17 && dealerHand.hasAces()) {
+        console.log("Dealer has 17 with at least one ace.")
+        //check if it has an ace and if that ace's value is 11
+        let firstAce = dealerHand.cards.find(card => card.faceValue === "ace")
+        let tempHand = new Hand(Array.from(dealerHand.cards))
+        tempHand.cards.splice(dealerHand.cards.indexOf(firstAce), 1)
+        if (tempHand.getRunningTotal() === 6) {
+            let card = stack.drawOne()
+            dealerHand.addCard(card)
+            console.log("Dealer drew a card: " + card.toString())
+            console.log("New running total: " + dealerHand.getRunningTotal())
+        }
+        
+        // five ace ace
+        // two four ace
+        // six ace
+    }
 }
+
+
 
 // busted case // stand case
 if (dealerHand.isBusted()) {
