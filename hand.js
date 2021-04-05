@@ -39,6 +39,11 @@ class Hand {
         ) 
     }
 
+    hasAces() {
+        let aces = this.cards.filter(card => card.faceValue === "ace")
+        return aces.length > 0
+    }
+
 
     evaluateHand() {
         // check for blackjack
