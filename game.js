@@ -1,7 +1,7 @@
 exports.processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
-    while (dealerHand.getRunningTotal() <= 17) { // FIXME shouldnt hit on a 17 unless it is a soft 17
+    while (dealerHand.getRunningTotal() < 17) { // FIXME shouldnt hit on a 17 unless it is a soft 17
         let card = stack.drawOne()
         dealerHand.addCard(card)
         console.log("Dealer drew a card: " + card.toString())
