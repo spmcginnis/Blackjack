@@ -1,5 +1,3 @@
-let Hand = require("./hand").Hand
-
 exports.processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
@@ -17,7 +15,7 @@ exports.processDealerHand = (dealerHand, stack) => {
             console.log("Dealer has 17 with at least one ace.")
             //check if it has an ace and if that ace's value is 11
             let firstAce = dealerHand.cards.find(card => card.faceValue === "ace")
-            let tempHand = new Hand(Array.from(dealerHand.cards))
+            let tempHand = dealerHand.copy()
             tempHand.cards.splice(dealerHand.cards.indexOf(firstAce), 1)
             if (tempHand.getRunningTotal() === 6) {
                 let card = stack.drawOne()

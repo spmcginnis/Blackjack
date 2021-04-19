@@ -56,6 +56,10 @@ class Hand {
         
     }
 
+    copy() {
+        return new Hand(Array.from(this.cards))
+    }
+
 }
 
 exports.Hand = Hand
