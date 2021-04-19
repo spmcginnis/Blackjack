@@ -1,8 +1,8 @@
 let StandardDeck = require("./standardDeck").StandardDeck
 
 class Stack {
-    constructor() {
-        this.deck = new StandardDeck().deck
+    constructor(deck = new StandardDeck().deck) {
+        this.deck = deck
     }
 
     shuffle() {

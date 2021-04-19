@@ -1,16 +1,13 @@
 exports.processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
-    while (dealerHand.getRunningTotal() <= 17) { 
+    while (dealerHand.getRunningTotal() <= 17) { // FIXME shouldnt hit on a 17 unless it is a soft 17
         let card = stack.drawOne()
         dealerHand.addCard(card)
         console.log("Dealer drew a card: " + card.toString())
         console.log("New running total: " + dealerHand.getRunningTotal())
         
-        // TODO test this behavior for the aces special case
-        // five ace ace
-        // two four ace
-        // six ace
+
         if (dealerHand.getRunningTotal() === 17 && dealerHand.hasAces()) {
             console.log("Dealer has 17 with at least one ace.")
             //check if it has an ace and if that ace's value is 11
