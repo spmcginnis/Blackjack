@@ -13,27 +13,32 @@ let stack = new Stack().shuffle()
 let dealerHand = new Hand()
 let allHands = []
 let players = 3
+
+// Setting the table
 for (let i = 0; i<players; i++) {
     let hand = new Hand()
     allHands.push(hand)
 }
 allHands.push(dealerHand)
 
-for (let hand of allHands){
-    let card = stack.drawOne()
-    hand.addCard(card)
+Game.deal(allHands, stack)
+
+// Gameplay Loop
+// not a dealer
+for (let i=0; i<allHands.length -1; i++){
+    let name = `player ${i+1}`
+    Game.processAIPlayerHand(name, allHands[i], stack)
 }
-for (let hand of allHands){
-    let card = stack.drawOne()
-    hand.addCard(card)
-}
+
+// dealer
+Game.processDealerHand(dealerHand, stack)
 
 for (let i=0; i<allHands.length; i++){
     let handHolder = (i < allHands.length - 1) ? `player ${i+1}` : "dealer"
     console.log(`${handHolder} total is ${allHands[i].getRunningTotal()}`)
 }
 
-Game.processDealerHand(dealerHand, stack)
+// End Score
 Game.scoreHands(dealerHand, allHands)
 
 // Blackjack detections

@@ -3,7 +3,7 @@ const { Hand } = require("./hand")
 exports.processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
-    while (dealerHand.getRunningTotal() < 17 || softAceCheck(dealerHand)) { // FIXME shouldnt hit on a 17 unless it is a soft 17
+    while (dealerHand.getRunningTotal() < 17 || softAceCheck(dealerHand)) {
         let card = stack.drawOne()
         dealerHand.addCard(card)
         console.log("Dealer drew a card: " + card.toString())
@@ -13,10 +13,8 @@ exports.processDealerHand = (dealerHand, stack) => {
 }
 
 function softAceCheck(dealerHand) {
+    //check if it has an ace and if that ace's value is 11
     if (dealerHand.getRunningTotal() === 17 && dealerHand.hasAces()) {
-        console.log("Dealer has 17 with at least one ace.")
-        //check if it has an ace and if that ace's value is 11
-
         //count the aces and store
         let aceCount = dealerHand.cards.filter(card => card.faceValue === "ace").length
         //remove the aces
@@ -29,6 +27,29 @@ function softAceCheck(dealerHand) {
 }
 
 exports.softAceCheck = softAceCheck
+
+// AI Player Hand
+const processAIPlayerHand = (name = "AI", hand, stack) => {
+    while (hand.getRunningTotal() < 18) {
+        let card = stack.drawOne()
+        hand.addCard(card)
+        console.log(`${name} drew a card: ${card.toString()}`)
+        console.log("New running total: " + hand.getRunningTotal())
+    }
+}
+exports.processAIPlayerHand = processAIPlayerHand
+
+const deal = (allHands, stack) => {
+    for (let hand of allHands){
+        let card = stack.drawOne()
+        hand.addCard(card)
+    }
+    for (let hand of allHands){
+        let card = stack.drawOne()
+        hand.addCard(card)
+    }
+}
+exports.deal = deal
 
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
