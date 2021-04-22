@@ -47,6 +47,7 @@ describe("Dealer hit test", () => {
 // two four ace
 // six ace
 // This is called a "soft 17" ... some casinos use this rule.
+// Seven aces edge case? Prob not needed
 describe("Soft 17 handling", () => {
         it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
             let hand = new Hand()

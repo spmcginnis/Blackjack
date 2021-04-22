@@ -1,29 +1,34 @@
+const { Hand } = require("./hand")
+
 exports.processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
-    while (dealerHand.getRunningTotal() < 17) { // FIXME shouldnt hit on a 17 unless it is a soft 17
+    while (dealerHand.getRunningTotal() < 17 || softAceCheck(dealerHand)) { // FIXME shouldnt hit on a 17 unless it is a soft 17
         let card = stack.drawOne()
         dealerHand.addCard(card)
         console.log("Dealer drew a card: " + card.toString())
         console.log("New running total: " + dealerHand.getRunningTotal())
-        
-
-        if (dealerHand.getRunningTotal() === 17 && dealerHand.hasAces()) {
-            console.log("Dealer has 17 with at least one ace.")
-            //check if it has an ace and if that ace's value is 11
-            let firstAce = dealerHand.cards.find(card => card.faceValue === "ace")
-            let tempHand = dealerHand.copy()
-            tempHand.cards.splice(dealerHand.cards.indexOf(firstAce), 1)
-            if (tempHand.getRunningTotal() === 6) {
-                let card = stack.drawOne()
-                dealerHand.addCard(card)
-                console.log("Dealer drew a card: " + card.toString())
-                console.log("New running total: " + dealerHand.getRunningTotal())
-            }
-        }
     }
     return dealerHand
 }
+
+function softAceCheck(dealerHand) {
+    if (dealerHand.getRunningTotal() === 17 && dealerHand.hasAces()) {
+        console.log("Dealer has 17 with at least one ace.")
+        //check if it has an ace and if that ace's value is 11
+
+        //count the aces and store
+        let aceCount = dealerHand.cards.filter(card => card.faceValue === "ace").length
+        //remove the aces
+        let tempHand = new Hand(dealerHand.cards.filter(card => card.faceValue !== "ace"))
+        // compare the remaining cards plus the number of aces to 7
+        return tempHand.getRunningTotal() + aceCount === 7
+    }
+    return false
+    
+}
+
+exports.softAceCheck = softAceCheck
 
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
