@@ -1,6 +1,6 @@
 const { Hand } = require("./hand")
 
-exports.processDealerHand = (dealerHand, stack) => {
+const processDealerHand = (dealerHand, stack) => {
     // check total if total is less than 17, hit
     
     while (dealerHand.getRunningTotal() < 17 || softAceCheck(dealerHand)) {
@@ -11,6 +11,8 @@ exports.processDealerHand = (dealerHand, stack) => {
     }
     return dealerHand
 }
+exports.processDealerHand = processDealerHand
+
 
 function softAceCheck(dealerHand) {
     //check if it has an ace and if that ace's value is 11
@@ -51,16 +53,53 @@ const deal = (allHands, stack) => {
 }
 exports.deal = deal
 
+const round = (playerList, stack) => {
+    let dealerHand = new Hand()
+    let allHands = []
+    let players = playerList.length
+
+    // Setting the table
+    for (let i = 0; i<players; i++) {
+        let hand = new Hand()
+        allHands.push(hand)
+    }
+    allHands.push(dealerHand)
+
+    deal(allHands, stack)
+
+    // Gameplay Loop
+    // not a dealer
+    for (let i=0; i<allHands.length -1; i++){
+        let name = playerList[i]
+        processAIPlayerHand(name, allHands[i], stack)
+    }
+
+    // dealer
+    processDealerHand(dealerHand, stack)
+
+    // Debugging
+    for (let i=0; i<allHands.length; i++){
+        let handHolder = (i < allHands.length - 1) ? playerList[i] : "dealer"
+        console.log(`${handHolder} total is ${allHands[i].getRunningTotal()}`)
+    }
+    
+    // End Score
+    scoreHands(playerList, dealerHand, allHands)
+}
+exports.round = round
+
+
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
-exports.scoreHands = (dealerHand, allHands) => {
+const scoreHands = (playerList, dealerHand, allHands) => {
 
     if (dealerHand.isBusted()) {
         console.log("Dealer has busted.")
         for (let i=0; i<allHands.length; i++) {
             if (!allHands[i].isBusted()) {
-                console.log("Player " + i + " has won.")
+                console.log(playerList[i]  + " has won.")
             }
+            // TODO report players that busted when the dealer also dealer also busted
         }
     } else {
         let dealerTotal = dealerHand.getRunningTotal()
@@ -68,19 +107,20 @@ exports.scoreHands = (dealerHand, allHands) => {
         
         for (let i=0; i<allHands.length - 1; i++) {
             if (allHands[i].isBusted()) {
-                console.log("Player " + i + " has busted.")
+                console.log(playerList[i] + " has busted.")
             }
             else if (allHands[i].getRunningTotal() > dealerTotal) {
-                console.log("Player " + i + " has won.")
+                console.log(playerList[i]  + " has won.")
             } 
             else if (allHands[i].getRunningTotal() === dealerTotal) {
-                console.log("Player " + i + " has tied the dealer. Push to next game.")
+                console.log(playerList[i]  + " has tied the dealer. Push to next game.")
             }
             else {
-                console.log("Player " + i + " has lost.")
+                console.log(playerList[i]  + " has lost.")
             }
         }
     }
     let winners = [] // placeholder
     return winners
 }
+exports.scoreHands = scoreHands
