@@ -57,6 +57,8 @@ const round = (playerList, stack) => {
     let dealerHand = new Hand()
     let allHands = []
     let players = playerList.length
+    let resultHands = []
+
 
     // Setting the table
     for (let i = 0; i<players; i++) {
@@ -71,7 +73,7 @@ const round = (playerList, stack) => {
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
         let name = playerList[i]
-        processAIPlayerHand(name, allHands[i], stack)
+        resultHands.push(processAIPlayerHand(name, allHands[i], stack))
     }
 
     // dealer
@@ -84,19 +86,19 @@ const round = (playerList, stack) => {
     }
     
     // End Score
-    scoreHands(playerList, dealerHand, allHands)
+    scoreHands(playerList, dealerHand, resultHands)
 }
 exports.round = round
 
 
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
-const scoreHands = (playerList, dealerHand, allHands) => {
+const scoreHands = (playerList, dealerHand, resultHands) => {
 
     if (dealerHand.isBusted()) {
         console.log("Dealer has busted.")
-        for (let i=0; i<allHands.length; i++) {
-            if (!allHands[i].isBusted()) {
+        for (let i=0; i<resultHands.length; i++) {
+            if (!resultHands[i].isBusted()) {
                 console.log(playerList[i]  + " has won.")
             }
             // TODO report players that busted when the dealer also dealer also busted
@@ -105,14 +107,14 @@ const scoreHands = (playerList, dealerHand, allHands) => {
         let dealerTotal = dealerHand.getRunningTotal()
         console.log("Dealer stands with "  + dealerTotal)
         
-        for (let i=0; i<allHands.length - 1; i++) {
-            if (allHands[i].isBusted()) {
+        for (let i=0; i<resultHands.length; i++) {
+            if (resultHands[i].isBusted()) {
                 console.log(playerList[i] + " has busted.")
             }
-            else if (allHands[i].getRunningTotal() > dealerTotal) {
+            else if (resultHands[i].getRunningTotal() > dealerTotal) {
                 console.log(playerList[i]  + " has won.")
             } 
-            else if (allHands[i].getRunningTotal() === dealerTotal) {
+            else if (resultHands[i].getRunningTotal() === dealerTotal) {
                 console.log(playerList[i]  + " has tied the dealer. Push to next game.")
             }
             else {
