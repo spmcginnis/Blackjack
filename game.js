@@ -123,6 +123,7 @@ const executeSplit = (hand, stack) => {
     
     return splitHands
 }
+exports.executeSplit = executeSplit
 
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case

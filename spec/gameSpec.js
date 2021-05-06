@@ -93,3 +93,20 @@ describe("Soft 17 handling", () => {
         expect(hand.getRunningTotal()).toEqual(17)
     })
 })
+
+describe("Split handling", () => {
+    it("correctly splits when there are two equal face-values of six", () => {
+        let hand = new Hand()
+        let stack = new Stack([
+            new Card("ten", "diamonds"),
+            new Card("five", "diamonds")
+        ])
+        hand.addCard(new Card("six", "spades"))
+        hand.addCard(new Card("six", "hearts"))
+
+        let splitHands= Game.executeSplit(hand, stack)
+
+        expect(splitHands[0].getRunningTotal()).toEqual(11)
+        expect(splitHands[1].getRunningTotal()).toEqual(16)
+    })
+})
