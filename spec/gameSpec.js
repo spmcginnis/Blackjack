@@ -49,49 +49,47 @@ describe("Dealer hit test", () => {
 // This is called a "soft 17" ... some casinos use this rule.
 // Seven aces edge case? Prob not needed
 describe("Soft 17 handling", () => {
-        it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
-            let hand = new Hand()
-            let stack = new Stack([new Card("ten", "diamonds")])
-            hand.addCard(new Card("five", "spades"))
-            hand.addCard(new Card("ace", "spades"))
-            hand.addCard(new Card("ace", "spades"))
-            expect(hand.cards.length).toEqual(3)
-            expect(hand.getRunningTotal()).toEqual(17)
+    it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
+        let hand = new Hand()
+        let stack = new Stack([new Card("ten", "diamonds")])
+        hand.addCard(new Card("five", "spades"))
+        hand.addCard(new Card("ace", "spades"))
+        hand.addCard(new Card("ace", "spades"))
+        expect(hand.cards.length).toEqual(3)
+        expect(hand.getRunningTotal()).toEqual(17)
 
-            Game.processDealerHand(hand, stack)
+        Game.processDealerHand(hand, stack)
 
-            expect(hand.cards.length).toEqual(4)
-            expect(hand.getRunningTotal()).toEqual(17)
-        })
+        expect(hand.cards.length).toEqual(4)
+        expect(hand.getRunningTotal()).toEqual(17)
+    })
 
-        it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
-            let hand = new Hand()
-            let stack = new Stack([new Card("ten", "diamonds")])
-            hand.addCard(new Card("two", "spades"))
-            hand.addCard(new Card("four", "spades"))
-            hand.addCard(new Card("ace", "spades"))
-            expect(hand.cards.length).toEqual(3)
-            expect(hand.getRunningTotal()).toEqual(17)
+    it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
+        let hand = new Hand()
+        let stack = new Stack([new Card("ten", "diamonds")])
+        hand.addCard(new Card("two", "spades"))
+        hand.addCard(new Card("four", "spades"))
+        hand.addCard(new Card("ace", "spades"))
+        expect(hand.cards.length).toEqual(3)
+        expect(hand.getRunningTotal()).toEqual(17)
 
-            Game.processDealerHand(hand, stack)
+        Game.processDealerHand(hand, stack)
 
-            expect(hand.cards.length).toEqual(4)
-            expect(hand.getRunningTotal()).toEqual(17)
-        })
+        expect(hand.cards.length).toEqual(4)
+        expect(hand.getRunningTotal()).toEqual(17)
+    })
 
-        it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
-            let hand = new Hand()
-            let stack = new Stack([new Card("ten", "diamonds")])
-            hand.addCard(new Card("six", "spades"))
-            hand.addCard(new Card("ace", "spades"))
-            expect(hand.cards.length).toEqual(2)
-            expect(hand.getRunningTotal()).toEqual(17)
+    it("checks a dealer hand with a value of 17 to see if there is an ace of value 11 and hits if necessary", () => {
+        let hand = new Hand()
+        let stack = new Stack([new Card("ten", "diamonds")])
+        hand.addCard(new Card("six", "spades"))
+        hand.addCard(new Card("ace", "spades"))
+        expect(hand.cards.length).toEqual(2)
+        expect(hand.getRunningTotal()).toEqual(17)
 
-            Game.processDealerHand(hand, stack)
+        Game.processDealerHand(hand, stack)
 
-            expect(hand.cards.length).toEqual(3)
-            expect(hand.getRunningTotal()).toEqual(17)
-        })
-    }
-)
-
+        expect(hand.cards.length).toEqual(3)
+        expect(hand.getRunningTotal()).toEqual(17)
+    })
+})
