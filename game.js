@@ -82,14 +82,11 @@ const round = (playerList, stack) => {
             console.log(`${name} has a split on ${playerHand.cards[0].faceValue}`)
             // splitting logic
             
-            for (let splitCard of playerHand.cards)
+            for (let newHand of executeSplit(playerHand, stack))
             {
-                let newHand = new Hand()
-                newHand.addCard(splitCard)
-                newHand.addCard(stack.drawOne())
-                resultHands.push(
-                    {name: name, hand: processAIPlayerHand(name, newHand, stack)}
-                    )
+            resultHands.push(
+                {name: name, hand: processAIPlayerHand(name, newHand, stack)}
+                )
             }
 
         } else {
@@ -97,9 +94,6 @@ const round = (playerList, stack) => {
                 {name: name, hand: processAIPlayerHand(name, allHands[i], stack)}
                 )
         }
-
-
-
     }
 
 
@@ -118,6 +112,21 @@ const round = (playerList, stack) => {
 }
 exports.round = round
 
+const executeSplit = (hand, stack) => {
+    let splitHands = []
+    
+    for (let splitCard of hand.cards)
+    {
+        let newHand = new Hand()
+        newHand.addCard(splitCard)
+        let newCard = stack.drawOne()
+        console.log(newCard.toString())
+        newHand.addCard(newCard)
+        splitHands.push(newHand)
+    }
+    
+    return splitHands
+}
 
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
