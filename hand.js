@@ -45,19 +45,12 @@ class Hand {
     }
 
 
-    evaluateHand() {
-        // check for blackjack
-
-        // check for bust
-
-        // check for ace
-
-        // check for split
-        
-    }
-
     copy() {
         return new Hand(Array.from(this.cards))
+    }
+
+    canSplit() {
+        return this.cards[0].faceValue === this.cards[1].faceValue
     }
 
 }

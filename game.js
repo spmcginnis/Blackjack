@@ -74,10 +74,35 @@ const round = (playerList, stack) => {
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
         let name = playerList[i]
-        resultHands.push(
-            {name: name, hand: processAIPlayerHand(name, allHands[i], stack)}
-            )
+        let playerHand = allHands[i]
+
+        // handle the split here
+        if (playerHand.canSplit())
+        {
+            console.log(`${name} has a split on ${playerHand.cards[0].faceValue}`)
+            // splitting logic
+            
+            for (let splitCard of playerHand.cards)
+            {
+                let newHand = new Hand()
+                newHand.addCard(splitCard)
+                newHand.addCard(stack.drawOne())
+                resultHands.push(
+                    {name: name, hand: processAIPlayerHand(name, newHand, stack)}
+                    )
+            }
+
+        } else {
+            resultHands.push(
+                {name: name, hand: processAIPlayerHand(name, allHands[i], stack)}
+                )
+        }
+
+
+
     }
+
+
 
     // dealer
     processDealerHand(dealerHand, stack)
@@ -104,7 +129,7 @@ const scoreHands = (dealerHand, resultHands) => {
             if (!resultHands[i].hand.isBusted()) {
                 console.log(resultHands[i].name  + " has won.")
             }
-            // TODO report players that busted when the dealer also dealer also busted
+            // TODO report players that busted when the dealer also busted
         }
     } else {
         let dealerTotal = dealerHand.getRunningTotal()
