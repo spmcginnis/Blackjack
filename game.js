@@ -101,11 +101,7 @@ const round = (playerList, stack) => {
     // dealer
     processDealerHand(dealerHand, stack)
 
-    // Debugging
-    for (let i=0; i<allHands.length; i++){
-        let handHolder = (i < allHands.length - 1) ? playerList[i] : "dealer"
-        console.log(`${handHolder} total is ${allHands[i].getRunningTotal()}`)
-    }
+
     
     // End Score
     scoreHands(dealerHand, resultHands)
@@ -131,6 +127,10 @@ const executeSplit = (hand, stack) => {
 // if dealer total is >= 17, then report total (could be stand or bust)
 // busted case // stand case
 const scoreHands = (dealerHand, resultHands) => {
+    // Logging the total scores
+    for (let result of resultHands){ 
+        console.log(`${result.name} total is ${result.hand.getRunningTotal()}`)
+    }
 
     if (dealerHand.isBusted()) {
         console.log("Dealer has busted.")
