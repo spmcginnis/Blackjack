@@ -28,6 +28,21 @@ describe("Hand Totaling", () => {
     }
 });
 
+describe("Splitting evaluation", () => {
+    it("canSplit is false with non-equal face cards", ()=>{
+        let hand = new Hand()
+        hand.addCard(new Card("king", "spades"))
+        hand.addCard(new Card("queen", "diamonds"))
+        expect(hand.canSplit()).toBe(false)
+    })
+    it("canSplit is true with equal face-valued face cards", ()=>{
+        let hand = new Hand()
+        hand.addCard(new Card("king", "spades"))
+        hand.addCard(new Card("king", "diamonds"))
+        expect(hand.canSplit()).toBe(true)
+    })
+})
+
 describe("Hand evaluation", () => {
     let hand;
     beforeEach(() => { hand = new Hand() })
