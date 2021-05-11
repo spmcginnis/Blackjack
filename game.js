@@ -31,11 +31,11 @@ function softAceCheck(dealerHand) {
 exports.softAceCheck = softAceCheck
 
 // AI Player Hand
-const processAIPlayerHand = (name = "AI", hand, stack) => {
+const processAIPlayerHand = (player, hand, stack) => {
     while (hand.getRunningTotal() < 18) {
         let card = stack.drawOne()
         hand.addCard(card)
-        console.log(`${name} drew a card: ${card.toString()}`)
+        console.log(`${player.name} drew a card: ${card.toString()}`)
         console.log("New running total: " + hand.getRunningTotal())
     }
     return hand
@@ -72,14 +72,15 @@ const round = (playerList, stack) => {
     // Gameplay Loop
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
-        let name = playerList[i].name
+
+        let player = playerList[i]
         let playerHandArray = (allHands[i].canSplit()) ?
-            executeSplit(playerList[i], allHands[i], stack) :
+            executeSplit(player, allHands[i], stack) :
             [allHands[i]]
 
         for (let hand of playerHandArray) {
         resultHands.push(
-            {name: name, hand: processAIPlayerHand(name, hand, stack)}
+            {name: player.name, hand: processAIPlayerHand(player, hand, stack)}
             )
         }
     }
