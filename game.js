@@ -121,9 +121,9 @@ const scoreHands = (dealerHand, resultHands) => {
 
     if (dealerHand.isBusted()) {
         console.log("Dealer has busted.")
-        for (let i=0; i<resultHands.length; i++) {
-            if (!resultHands[i].hand.isBusted()) {
-                console.log(resultHands[i].player.name  + " has won.")
+        for (let result of resultHands) {
+            if (!result.hand.isBusted()) {
+                console.log(result.player.name  + " has won.")
             }
             // TODO report players that busted when the dealer also busted
         }
@@ -131,8 +131,7 @@ const scoreHands = (dealerHand, resultHands) => {
         let dealerTotal = dealerHand.getRunningTotal()
         console.log("Dealer stands with "  + dealerTotal)
         
-        for (let i=0; i<resultHands.length; i++) {
-            let {player, hand} = resultHands[i]
+        for (let {player, hand} of resultHands) {
             if (hand.isBusted()) {
                 console.log(player.name + " has busted.")
             }
