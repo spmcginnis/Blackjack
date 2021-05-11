@@ -74,7 +74,7 @@ const round = (playerList, stack) => {
     for (let i=0; i<allHands.length -1; i++){
         let name = playerList[i].name
         let playerHandArray = (allHands[i].canSplit()) ?
-            executeSplit(name, allHands[i], stack) :
+            executeSplit(playerList[i], allHands[i], stack) :
             [allHands[i]]
 
         for (let hand of playerHandArray) {
@@ -92,8 +92,8 @@ const round = (playerList, stack) => {
 }
 exports.round = round
 
-const executeSplit = (name, hand, stack) => {
-    console.log(`${name} has a split on ${hand.cards[0].faceValue}`)
+const executeSplit = (player, hand, stack) => {
+    console.log(`${player.name} has a split on ${hand.cards[0].faceValue}`)
     let splitHands = []
     
     for (let splitCard of hand.cards)

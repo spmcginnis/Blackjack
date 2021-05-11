@@ -2,7 +2,7 @@ const Game = require("../game")
 const { Stack } = require("../stack")
 const { Hand } = require("../hand")
 const { Card } = require("../card")
-
+const { Player } = require("../player")
 
 describe("Dealer hit test", () => {
     it("should not try to draw a card", () => {
@@ -96,6 +96,7 @@ describe("Soft 17 handling", () => {
 
 describe("Split handling", () => {
     it("correctly splits when there are two equal face-values of six", () => {
+        let player = new Player("testname")
         let hand = new Hand()
         let stack = new Stack([
             new Card("ten", "diamonds"),
@@ -104,7 +105,7 @@ describe("Split handling", () => {
         hand.addCard(new Card("six", "spades"))
         hand.addCard(new Card("six", "hearts"))
 
-        let splitHands= Game.executeSplit("testname", hand, stack)
+        let splitHands= Game.executeSplit(player, hand, stack)
 
         expect(splitHands[0].getRunningTotal()).toEqual(11)
         expect(splitHands[1].getRunningTotal()).toEqual(16)
