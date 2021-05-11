@@ -138,6 +138,9 @@ const scoreHands = (dealerHand, resultHands) => {
             else if (hand.getRunningTotal() > dealerTotal) {
                 console.log(name  + " has won.")
             } 
+            else if (hand.isBlackjack() && !dealerHand.isBlackjack()) {
+                console.log(name  + " has won with a blackjack.")
+            }
             else if (hand.getRunningTotal() === dealerTotal) {
                 console.log(name  + " has tied the dealer. Push to next game.")
             }
