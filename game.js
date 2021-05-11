@@ -80,7 +80,7 @@ const round = (playerList, stack) => {
 
         for (let hand of playerHandArray) {
         resultHands.push(
-            {name: player.name, hand: processAIPlayerHand(player, hand, stack)}
+            {player: player, hand: processAIPlayerHand(player, hand, stack)}
             )
         }
     }
@@ -116,14 +116,14 @@ exports.executeSplit = executeSplit
 const scoreHands = (dealerHand, resultHands) => {
     // Logging the total scores
     for (let result of resultHands){ 
-        console.log(`${result.name} total is ${result.hand.getRunningTotal()}`)
+        console.log(`${result.player.name} total is ${result.hand.getRunningTotal()}`)
     }
 
     if (dealerHand.isBusted()) {
         console.log("Dealer has busted.")
         for (let i=0; i<resultHands.length; i++) {
             if (!resultHands[i].hand.isBusted()) {
-                console.log(resultHands[i].name  + " has won.")
+                console.log(resultHands[i].player.name  + " has won.")
             }
             // TODO report players that busted when the dealer also busted
         }
@@ -132,21 +132,21 @@ const scoreHands = (dealerHand, resultHands) => {
         console.log("Dealer stands with "  + dealerTotal)
         
         for (let i=0; i<resultHands.length; i++) {
-            let {name, hand} = resultHands[i]
+            let {player, hand} = resultHands[i]
             if (hand.isBusted()) {
-                console.log(name + " has busted.")
+                console.log(player.name + " has busted.")
             }
             else if (hand.getRunningTotal() > dealerTotal) {
-                console.log(name  + " has won.")
+                console.log(player.name  + " has won.")
             } 
             else if (hand.isBlackjack() && !dealerHand.isBlackjack()) {
-                console.log(name  + " has won with a blackjack.")
+                console.log(player.name  + " has won with a blackjack.")
             }
             else if (hand.getRunningTotal() === dealerTotal) {
-                console.log(name  + " has tied the dealer. Push to next game.")
+                console.log(player.name  + " has tied the dealer. Push to next game.")
             }
             else {
-                console.log(name  + " has lost.")
+                console.log(player.name  + " has lost.")
             }
         }
     }
