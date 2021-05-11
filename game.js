@@ -132,7 +132,8 @@ const scoreHands = (dealerHand, resultHands) => {
         console.log("Dealer stands with "  + dealerTotal)
         
         for (let {player, hand} of resultHands) {
-            resolveHand(player, hand, dealerHand)
+            let adjustment = resolveHand(player, hand, dealerHand)
+            player.chips += adjustment[0]
         }
     }
     let winners = [] // placeholder
@@ -141,19 +142,26 @@ const scoreHands = (dealerHand, resultHands) => {
 exports.scoreHands = scoreHands
 
 const resolveHand = (player, hand, dealerHand) => {
+    
     if (hand.isBusted()) {
         console.log(player.name + " has busted.")
+        return [-1, "busted"]
     }
     else if (hand.getRunningTotal() > dealerHand.getRunningTotal()) {
         console.log(player.name  + " has won.")
+        return [1, "won"]
     } 
     else if (hand.isBlackjack() && !dealerHand.isBlackjack()) {
         console.log(player.name  + " has won with a blackjack.")
+        return [1, "blackjack"]
     }
     else if (hand.getRunningTotal() === dealerHand.getRunningTotal()) {
         console.log(player.name  + " has tied the dealer. Push to next game.")
+        return [0, "push"] 
     }
     else {
         console.log(player.name  + " has lost.")
+        return [-1, "loss"]
     }
+    
 }
