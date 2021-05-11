@@ -1,10 +1,6 @@
-let Stack = require("./stack").Stack
-let Hand = require("./hand").Hand
-
+const { Stack } = require("./stack")
 const { Player } = require("./player")
-
 const Game = require("./game")
-// let Card = require("./card").Card
 
 let stack = new Stack().shuffle()
 // TODO implement multiple decks in a 'shoe'
