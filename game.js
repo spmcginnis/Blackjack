@@ -57,12 +57,12 @@ exports.deal = deal
 const round = (playerList, stack) => {
     let dealerHand = new Hand()
     let allHands = []
-    let players = playerList.length
+    let numPlayers = playerList.length
     let resultHands = []
 
 
     // Setting the table
-    for (let i = 0; i<players; i++) {
+    for (let i = 0; i<numPlayers; i++) {
         allHands.push(new Hand())
     }
     allHands.push(dealerHand)
@@ -72,7 +72,7 @@ const round = (playerList, stack) => {
     // Gameplay Loop
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
-        let name = playerList[i]
+        let name = playerList[i].name
         let playerHandArray = (allHands[i].canSplit()) ?
             executeSplit(name, allHands[i], stack) :
             [allHands[i]]
