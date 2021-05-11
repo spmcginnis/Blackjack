@@ -63,8 +63,7 @@ const round = (playerList, stack) => {
 
     // Setting the table
     for (let i = 0; i<players; i++) {
-        let hand = new Hand()
-        allHands.push(hand)
+        allHands.push(new Hand())
     }
     allHands.push(dealerHand)
 
@@ -74,41 +73,27 @@ const round = (playerList, stack) => {
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
         let name = playerList[i]
-        let playerHand = allHands[i]
+        let playerHandArray = (allHands[i].canSplit()) ?
+            executeSplit(name, allHands[i], stack) :
+            [allHands[i]]
 
-        // handle the split here
-        if (playerHand.canSplit())
-        {
-            console.log(`${name} has a split on ${playerHand.cards[0].faceValue}`)
-            // splitting logic
-            
-            for (let newHand of executeSplit(playerHand, stack))
-            {
-            resultHands.push(
-                {name: name, hand: processAIPlayerHand(name, newHand, stack)}
-                )
-            }
-
-        } else {
-            resultHands.push(
-                {name: name, hand: processAIPlayerHand(name, allHands[i], stack)}
-                )
+        for (let hand of playerHandArray) {
+        resultHands.push(
+            {name: name, hand: processAIPlayerHand(name, hand, stack)}
+            )
         }
     }
-
-
 
     // dealer
     processDealerHand(dealerHand, stack)
 
-
-    
     // End Score
     scoreHands(dealerHand, resultHands)
 }
 exports.round = round
 
-const executeSplit = (hand, stack) => {
+const executeSplit = (name, hand, stack) => {
+    console.log(`${name} has a split on ${hand.cards[0].faceValue}`)
     let splitHands = []
     
     for (let splitCard of hand.cards)

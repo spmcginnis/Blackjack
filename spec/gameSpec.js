@@ -104,7 +104,7 @@ describe("Split handling", () => {
         hand.addCard(new Card("six", "spades"))
         hand.addCard(new Card("six", "hearts"))
 
-        let splitHands= Game.executeSplit(hand, stack)
+        let splitHands= Game.executeSplit("testname", hand, stack)
 
         expect(splitHands[0].getRunningTotal()).toEqual(11)
         expect(splitHands[1].getRunningTotal()).toEqual(16)
