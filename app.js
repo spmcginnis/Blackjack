@@ -11,7 +11,7 @@ let playerList = [
     new Player("Susan", 100),
     new Player("Terry", 100)]
 
-
+// Move set the table here?
 
 Game.round(playerList, stack)
 

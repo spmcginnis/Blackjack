@@ -1,8 +1,9 @@
 let Card = require("./card").Card
 
 class Hand {
-    constructor(cards=[]) {
+    constructor(cards=[], ante = 0) {
         this.cards = cards
+        this.ante = ante
     }
 
     addCard(card) {

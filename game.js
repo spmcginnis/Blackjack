@@ -59,12 +59,18 @@ const round = (playerList, stack) => {
     let allHands = []
     let numPlayers = playerList.length
     let resultHands = []
-
+    
 
     // Setting the table
-    for (let i = 0; i<numPlayers; i++) {
-        allHands.push(new Hand())
+    for (let player of playerList) {
+        let ante = 1
+        if (player.chips >= ante) // we'll want a test for players with no chips
+        {
+            allHands.push(new Hand([], ante))
+            player.chips -= ante
+        }
     }
+
     allHands.push(dealerHand)
 
     deal(allHands, stack)
@@ -127,6 +133,7 @@ const scoreHands = (dealerHand, resultHands) => {
     for (let {player, hand} of resultHands) {
         let adjustment = resolveHand(player, hand, dealerHand)[0]
         player.chips += adjustment
+        console.log(`${player.name} receives ${adjustment} chips. Total chips: ${player.chips}`)
     }
     
     let winners = [] // placeholder
@@ -136,34 +143,36 @@ exports.scoreHands = scoreHands
 
 const resolveHand = (player, hand, dealerHand) => {
     
+    let winnings = hand.ante *2
+
     if (hand.isBusted()) {
         console.log(player.name + " has busted.")
-        return [-1, "busted"]
+        return [0, "busted"]
     }
     else if (hand.isBlackjack() && !dealerHand.isBlackjack()) {
         console.log(player.name  + " has won with a blackjack.")
-        return [1, "blackjack"]
+        return [winnings * 1.5, "blackjack"]
     }
     else if (dealerHand.isBusted())
     {
         console.log(player.name  + " has won.")
-        return [1, "won"]
+        return [winnings, "won"]
     }
     else if (!hand.isBlackjack() && dealerHand.isBlackjack()) {
         console.log(player.name  + " has won with a blackjack.")
-        return [-1, "loss"]
+        return [0, "loss"]
     }
     else if (hand.getRunningTotal() > dealerHand.getRunningTotal()) {
         console.log(player.name  + " has won.")
-        return [1, "won"]
+        return [winnings, "won"]
     } 
     else if (hand.getRunningTotal() === dealerHand.getRunningTotal()) {
         console.log(player.name  + " has tied the dealer. Push to next game.")
-        return [0, "push"] 
+        return [hand.ante, "push"] // fixme pushing to the next round
     }
     else {
         console.log(player.name  + " has lost.")
-        return [-1, "loss"]
+        return [0, "loss"]
     }   
 }
 exports.resolveHand = resolveHand

@@ -5,6 +5,8 @@ class Player {
         this.name = name
         this.chips = chips
     }
+
+    // joinGame
 }
 
 exports.Player = Player
