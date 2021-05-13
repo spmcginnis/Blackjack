@@ -119,23 +119,16 @@ const scoreHands = (dealerHand, resultHands) => {
         console.log(`${result.player.name} total is ${result.hand.getRunningTotal()}`)
     }
 
-    if (dealerHand.isBusted()) {
-        console.log("Dealer has busted.")
-        for (let result of resultHands) {
-            if (!result.hand.isBusted()) {
-                console.log(result.player.name  + " has won.")
-            }
-            // TODO report players that busted when the dealer also busted
-        }
-    } else {
+    if (!dealerHand.isBusted()) {
         let dealerTotal = dealerHand.getRunningTotal()
         console.log("Dealer stands with "  + dealerTotal)
-        
-        for (let {player, hand} of resultHands) {
-            let adjustment = resolveHand(player, hand, dealerHand)[0]
-            player.chips += adjustment
-        }
     }
+
+    for (let {player, hand} of resultHands) {
+        let adjustment = resolveHand(player, hand, dealerHand)[0]
+        player.chips += adjustment
+    }
+    
     let winners = [] // placeholder
     return winners
 }
