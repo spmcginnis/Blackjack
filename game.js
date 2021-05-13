@@ -144,7 +144,7 @@ const resolveHand = (player, hand, dealerHand) => {
         console.log(player.name  + " has won with a blackjack.")
         return [1, "blackjack"]
     }
-    else if (dealerHand.isBusted() && !hand.isBusted())
+    else if (dealerHand.isBusted())
     {
         console.log(player.name  + " has won.")
         return [1, "won"]
