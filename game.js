@@ -151,6 +151,15 @@ const resolveHand = (player, hand, dealerHand) => {
         console.log(player.name  + " has won with a blackjack.")
         return [1, "blackjack"]
     }
+    else if (dealerHand.isBusted() && !hand.isBusted())
+    {
+        console.log(player.name  + " has won.")
+        return [1, "won"]
+    }
+    else if (!hand.isBlackjack() && dealerHand.isBlackjack()) {
+        console.log(player.name  + " has won with a blackjack.")
+        return [-1, "loss"]
+    }
     else if (hand.getRunningTotal() > dealerHand.getRunningTotal()) {
         console.log(player.name  + " has won.")
         return [1, "won"]

@@ -111,3 +111,65 @@ describe("Split handling", () => {
         expect(splitHands[1].getRunningTotal()).toEqual(16)
     })
 })
+
+describe("Hand resolution", ()=> {
+    let player = new Player("testname")
+
+    it("if dealer and player both have a blackjack the result is a push", ()=> {
+        let dealerHand = new Hand([new Card("ten", "spades"), new Card("ace", "spades")])
+        let playerHand = new Hand([new Card("ten", "spades"), new Card("ace", "spades")])
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("push")
+    })
+
+    it("dealer has non-blackjack 21 and player has blackjack -- player wins", ()=> {
+        let dealerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades"),
+            new Card("six", "spades")])
+        let playerHand = new Hand([new Card("ten", "spades"), new Card("ace", "spades")])
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("blackjack")
+    })
+
+    it("player has non-blackjack 21 and dealer has blackjack -- player loses", ()=> {
+        let playerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades"),
+            new Card("six", "spades")])
+        let dealerHand = new Hand([new Card("ten", "spades"), new Card("ace", "spades")])
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("loss")
+    })
+
+    it("player and dealer both bust with same amount -- still a player loss", ()=> {
+        let playerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades"),
+            new Card("seven", "spades")]
+            )
+        let dealerHand = playerHand
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("busted")
+    })
+
+    it("player has blackjack and dealer busts", ()=>{
+        let playerHand = new Hand([new Card("ten", "spades"), new Card("ace", "spades")])
+        let dealerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades"),
+            new Card("seven", "spades")])
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("blackjack")
+    })
+
+    it("player has less than blackjack dealer busts", ()=>{
+        let playerHand = new Hand([new Card("ten", "spades"), new Card("eight", "spades")])
+        let dealerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades"),
+            new Card("seven", "spades")])
+
+        expect(Game.resolveHand(player, playerHand, dealerHand)[1]).toEqual("won")
+    })
+})
