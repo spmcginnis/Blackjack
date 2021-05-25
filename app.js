@@ -23,7 +23,7 @@ function prompt() {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
-      });
+    });
     return new Promise((resolve, reject) => {
         rl.question('Play a round? Y/N ', (input) => {
             rl.close()
@@ -36,24 +36,22 @@ async function mainLoop () {
     for (let i=0; i<maxRounds; i++)
     {   
         console.log("Loop has run ")
-        await prompt().then((input) => {
-            if (input === "Y")
+        let input = await prompt()
+        
+        if (input === "Y")
+        {
+            console.log('Round ' + round++)
+            Game.round(playerList, stack)
+            //check stack
+            if (stack.deck.length < 20)
             {
-                console.log('Round ' + round++)
-                Game.round(playerList, stack)
-                //check stack
-                if (stack.deck.length < 20)
-                {
-                    stack = new Stack().shuffle()
-                    console.log("we have shuffled a new deck")
-                }
-            } else {
-                console.log("Process exited")
-                process.exit(0)
+                stack = new Stack().shuffle()
+                console.log("we have shuffled a new deck")
             }
-        })
-    
-    
+        } else {
+            console.log("Process exited")
+            process.exit(0)
+        }
     }
 }
 
