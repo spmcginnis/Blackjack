@@ -33,24 +33,15 @@ function prompt() {
 }
 
 async function mainLoop () {
-    for (let i=0; i<maxRounds; i++)
+    while (await prompt() === "Y" && round <= maxRounds)
     {   
-        console.log("Loop has run ")
-        let input = await prompt()
-        
-        if (input === "Y")
+        console.log(`Round ${round++} \n------------------` )
+        Game.round(playerList, stack)
+        //check stack
+        if (stack.deck.length < 20)
         {
-            console.log('Round ' + round++)
-            Game.round(playerList, stack)
-            //check stack
-            if (stack.deck.length < 20)
-            {
-                stack = new Stack().shuffle()
-                console.log("we have shuffled a new deck")
-            }
-        } else {
-            console.log("Process exited")
-            process.exit(0)
+            stack = new Stack().shuffle()
+            console.log("we have shuffled a new deck")
         }
     }
 }
