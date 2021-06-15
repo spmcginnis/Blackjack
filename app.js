@@ -10,10 +10,11 @@ let stack = new Stack().shuffle()
 // TODO implement multiple decks in a 'shoe'
 // const cut = 75
 // TODO implement reshuffle at the cut boundary
+let startingCash = 4
 let playerList = [
-    new Player("Bob", 100),
-    new Player("Susan", 100),
-    new Player("Terry", 100)]
+    new Player("Bob", startingCash),
+    new Player("Susan", startingCash),
+    new Player("Terry", startingCash)]
 
 // Move set the table here?
 let round = 1

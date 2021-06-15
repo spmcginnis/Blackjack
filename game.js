@@ -54,21 +54,23 @@ const deal = (allHands, stack) => {
 }
 exports.deal = deal
 
-const round = (playerList, stack) => {
+const round = (playerList, stack, ante = 1) => {
     let dealerHand = new Hand()
     let allHands = []
-    let numPlayers = playerList.length
     let resultHands = []
-    
+
+    // filter players with no chips
+    let activePlayers = playerList.filter(player => player.chips >= ante)
+    let inactivePlayers = playerList.filter(player => !(player.chips >= ante))
+    for (let player of inactivePlayers)
+    {
+        console.log(`${player.name} cannot afford the ante.`)
+    }
 
     // Setting the table
-    for (let player of playerList) {
-        let ante = 1
-        if (player.chips >= ante) // we'll want a test for players with no chips
-        {
-            allHands.push(new Hand([], ante))
-            player.chips -= ante
-        }
+    for (let player of activePlayers) {
+        allHands.push(new Hand([], ante))
+        player.chips -= ante
     }
 
     allHands.push(dealerHand)
@@ -79,7 +81,7 @@ const round = (playerList, stack) => {
     // not a dealer
     for (let i=0; i<allHands.length -1; i++){
 
-        let player = playerList[i]
+        let player = activePlayers[i]
         let playerHandArray = (allHands[i].canSplit()) ?
             executeSplit(player, allHands[i], stack) :
             [allHands[i]]
