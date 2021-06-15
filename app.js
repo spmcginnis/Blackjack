@@ -33,7 +33,7 @@ function prompt() {
 }
 
 async function mainLoop () {
-    while (await prompt() === "Y" && round <= maxRounds)
+    while ((await prompt()).match(/y/i) && round <= maxRounds)
     {   
         console.log(`Round ${round++} \n------------------` )
         Game.round(playerList, stack)
