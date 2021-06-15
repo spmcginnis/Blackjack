@@ -37,7 +37,7 @@ async function mainLoop () {
     while ((await prompt()).match(/y/i) && round <= maxRounds)
     {   
         console.log(`Round ${round++} \n------------------` )
-        Game.round(playerList, stack)
+        Game.round(playerList, stack, 2)
         //check stack
         if (stack.deck.length < 20)
         {

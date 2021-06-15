@@ -145,7 +145,7 @@ exports.scoreHands = scoreHands
 
 const resolveHand = (player, hand, dealerHand) => {
     
-    let winnings = hand.ante *2
+    let winnings = hand.bet *2
 
     if (hand.isBusted()) {
         console.log(player.name + " has busted.")
@@ -170,7 +170,7 @@ const resolveHand = (player, hand, dealerHand) => {
     } 
     else if (hand.getRunningTotal() === dealerHand.getRunningTotal()) {
         console.log(player.name  + " has tied the dealer. Push to next game.")
-        return [hand.ante, "push"] // fixme pushing to the next round
+        return [hand.bet, "push"]
     }
     else {
         console.log(player.name  + " has lost.")
