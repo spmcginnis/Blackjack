@@ -82,7 +82,7 @@ const round = (playerList, stack, ante = 1) => {
     for (let i=0; i<allHands.length -1; i++){
 
         let player = activePlayers[i]
-        let playerHandArray = (allHands[i].canSplit()) ?
+        let playerHandArray = (allHands[i].canSplit() && player.chips >= ante) ?
             executeSplit(player, allHands[i], stack) :
             [allHands[i]]
 
