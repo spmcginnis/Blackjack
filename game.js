@@ -32,6 +32,12 @@ exports.softAceCheck = softAceCheck
 
 // AI Player Hand
 const processAIPlayerHand = (player, hand, stack) => {
+    
+
+    // shouldDoubleDown(hand, dealerFaceCard)
+    
+    // return
+    
     while (hand.getRunningTotal() < 18) {
         let card = stack.drawOne()
         hand.addCard(card)
@@ -178,3 +184,28 @@ const resolveHand = (player, hand, dealerHand) => {
     }   
 }
 exports.resolveHand = resolveHand
+
+const shouldDoubleDown = (hand, dealerFaceCard) => {
+    // check the number of cards ... make sure there are only two
+
+    let total = hand.getRunningTotal()
+    let soft = hand.hasAces()
+    let dealerShowing = dealerFaceCard.getValue()
+    // case one: 9 and no ace, dealer has two to six
+    if (total === 9 && !soft && (dealerShowing <= 6 && dealerShowing >= 2)) {
+        return true
+    }
+
+    // case two: 10 or 11 no ace, dealer is showing less than this amount.
+    if (!soft && (total === 10 || total === 11) && dealerShowing < total ) {
+        return true
+    }
+    // case three: 16, 17, or 18 and one card is an ace, dealer has two to six
+    if (soft && (total >= 16 && total <= 18) && (dealerShowing <= 6 && dealerShowing >= 2))
+    {
+        return true
+    }
+    
+    return false
+}
+exports.shouldDoubleDown = shouldDoubleDown

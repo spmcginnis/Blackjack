@@ -243,3 +243,42 @@ describe("Hand resolution", ()=> {
     })
 
 })
+
+describe ("Double Down Trigger", ()=> {
+    it ("Should not double down", ()=> {
+        let playerHand = new Hand(
+            [new Card("ten", "spades"),
+            new Card("five", "spades")]
+        )
+        let dealerShowing = new Card("six", "hearts")
+
+        expect(Game.shouldDoubleDown(playerHand, dealerShowing)).toBe(false)
+    })
+    it ("case one: 9 and no ace, dealer has two to six", ()=> {
+        let playerHand = new Hand(
+            [new Card("four", "spades"),
+            new Card("five", "spades")]
+        )
+        let dealerShowing = new Card("six", "hearts")
+
+        expect(Game.shouldDoubleDown(playerHand, dealerShowing)).toBe(true)
+    })
+    it ("case two: 10 or 11 no ace, dealer is showing less than this amount.", ()=> {
+        let playerHand = new Hand(
+            [new Card("six", "spades"),
+            new Card("five", "spades")]
+        )
+        let dealerShowing = new Card("king", "hearts")
+
+        expect(Game.shouldDoubleDown(playerHand, dealerShowing)).toBe(true)
+    })
+    it ("case three: 16, 17, or 18 and one card is an ace, dealer has two to six", ()=> {
+        let playerHand = new Hand(
+            [new Card("ace", "spades"),
+            new Card("five", "spades")]
+        )
+        let dealerShowing = new Card("six", "hearts")
+
+        expect(Game.shouldDoubleDown(playerHand, dealerShowing)).toBe(true)
+    })
+})
