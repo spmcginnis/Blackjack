@@ -36,8 +36,7 @@ const processAIPlayerHand = (player, hand, stack, dealerShowing) => {
     const addCardWithMessage = () => {
         let card = stack.drawOne()
         hand.addCard(card)
-        console.log(`${player.name} drew a card: ${card.toString()}`)
-        console.log("New running total: " + hand.getRunningTotal())
+        console.log(`${player.name} drew a card: ${card.toString()} New total: ${hand.getRunningTotal()}`)
     }
 
     // shouldDoubleDown(hand, dealerFaceCard)
