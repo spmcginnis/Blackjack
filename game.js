@@ -31,19 +31,30 @@ function softAceCheck(dealerHand) {
 exports.softAceCheck = softAceCheck
 
 // AI Player Hand
-const processAIPlayerHand = (player, hand, stack) => {
+const processAIPlayerHand = (player, hand, stack, dealerShowing) => {
     
-
-    // shouldDoubleDown(hand, dealerFaceCard)
-    
-    // return
-    
-    while (hand.getRunningTotal() < 18) {
+    const addCardWithMessage = () => {
         let card = stack.drawOne()
         hand.addCard(card)
         console.log(`${player.name} drew a card: ${card.toString()}`)
         console.log("New running total: " + hand.getRunningTotal())
     }
+
+    // shouldDoubleDown(hand, dealerFaceCard)
+    if (shouldDoubleDown(hand, dealerShowing) && (player.chips >= hand.ante)) 
+    {
+        // do the betting stuff
+        player.chips -= hand.ante
+        hand.bet += hand.ante
+
+        console.log("Doubling Down.  New bet is " + hand.bet)
+        addCardWithMessage()
+    } else {
+        while (hand.getRunningTotal() < 18) {
+            addCardWithMessage()
+        }
+    }
+
     return hand
 }
 exports.processAIPlayerHand = processAIPlayerHand
@@ -94,7 +105,7 @@ const round = (playerList, stack, ante = 1) => {
 
         for (let hand of playerHandArray) {
         resultHands.push(
-            {player: player, hand: processAIPlayerHand(player, hand, stack)}
+            {player: player, hand: processAIPlayerHand(player, hand, stack, dealerHand.cards[1])}
             )
         }
     }

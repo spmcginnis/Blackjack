@@ -3,7 +3,7 @@ let Card = require("./card").Card
 class Hand {
     constructor(cards=[], ante = 0) {
         this.cards = cards
-        this.ante = ante // this is not being used
+        this.ante = ante
         this.bet = ante
     }
 
